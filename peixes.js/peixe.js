@@ -2,6 +2,12 @@ var config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
+
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
+     },
+
     scene: {
         preload: preload,
         create: create,
@@ -31,6 +37,36 @@ function create() {
 
     Tubarão = this.add.image(400, 300, "Tubarão");
     Tubarão.setFlip(true, false);
+
+    //verifica orientação do dispositivo
+    if(game.scale.orientation === Phaser.Scale.LANDSCAPE){
+        this.add.image(400, 300, "Mar");
+    } else if(game.scale.orientation === Phaser.Scale.PORTRAIT){
+        this.add.image(400, 300, "Mar");
+    }
+    
+    
+    //verifica tipo de dispositivo
+    if (game.device.os.desktop){
+        Baiacu = this.add.image(400, 300, "Baiacu").setScale(0.5);
+        Tubarão = this.add.image(400, 300, "Tubarão");
+        Tubarão.setFlip(true, false);
+    } else{
+        
+        Baiacu = this.add.image(400, 300, "Baiacu").setScale(0.5);
+        Tubarão = this.add.image(400, 300, "Tubarão");
+        Tubarão.setFlip(true, false);
+    }
+
+    //evento de mudança de orientação
+    game.scale.on('orientationchange', function(orientation) {
+        if (orientation === Phaser.Scale.PORTRAIT) {
+            console.log('PORTRAIT')
+        }  
+        if (orientation === Phaser.Scale.LANDSCAPE) {
+            console.log('LANDSCAPE')
+        } 
+    });
 
 }
 
